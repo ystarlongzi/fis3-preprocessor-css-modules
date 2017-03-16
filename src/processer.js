@@ -20,15 +20,15 @@ module.exports = function (content, file, conf) {
 
     // 无变量声明的, 不进行转化
     if (!hasDeclare) {
-	  return {
+      return {
         injectableSource: file.getContent(),
       };
     }
 
     core.load(file.getContent(), file.url)
-      .then(function (obj) {
-        result = obj;
-      });
+    .then(function (obj) {
+      result = obj;
+    });
 
     while (!result) {
       deasync.sleep(100);
@@ -56,30 +56,30 @@ module.exports = function (content, file, conf) {
     str = !declare ? '' : (declare + JSON.stringify(scopedCSS.exportTokens) + ';');
 
     switch (mode) {
-        case 'dep':
-          // 添加依赖标记
-          str += lang.info.wrap(lang.require.wrap(value));
-          break;
+      case 'dep':
+        // 添加依赖标记
+        str += lang.info.wrap(lang.require.wrap(value));
+        break;
 
-        case 'inline':
-          str += css2js.processCss(scopedCSS.injectableSource);
-          break;
+      case 'inline':
+        str += css2js.processCss(scopedCSS.injectableSource);
+        break;
 
-        case 'jsRequire':
-          var newFile = fis.file.wrap(targetFile.dirname + '/' + targetFile.filename + targetFile.rExt + '.js');
+      case 'jsRequire':
+        var newFile = fis.file.wrap(targetFile.dirname + '/' + targetFile.filename + targetFile.rExt + '.js');
 
-          newFile.setContent(css2js.processCss(scopedCSS.injectableSource));
-          newFile.isMod = true;
-          newFile.moduleId = newFile.id;
-          fis.compile(newFile);
+        newFile.setContent(css2js.processCss(scopedCSS.injectableSource));
+        newFile.isMod = true;
+        newFile.moduleId = newFile.id;
+        fis.compile(newFile);
 
-          // 其他文件的require中引用的是moduleId，方便从ret.ids中查找到文件，参考deps-pack打包。
-          file.extras = file.extras || {};
-          file.extras.derived = file.extras.derived || [];
-          file.extras.derived.push(newFile);
+        // 其他文件的require中引用的是moduleId，方便从ret.ids中查找到文件，参考deps-pack打包。
+        file.extras = file.extras || {};
+        file.extras.derived = file.extras.derived || [];
+        file.extras.derived.push(newFile);
 
-          str += 'require(' + quote + (newFile.moduleId || newFile.id) + quote + ')';
-          break;
+        str += 'require(' + quote + (newFile.moduleId || newFile.id) + quote + ')';
+        break;
     }
 
     return str;
