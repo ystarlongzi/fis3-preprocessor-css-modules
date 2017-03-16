@@ -3,27 +3,27 @@ var genericNames = require('generic-names');
 
 // class 名称生成器
 function getScopedNameGenerator(conf) {
-	var generator = conf.scope;
+  var generator = conf.scope;
 
 	if (typeof generator === 'function') {
-		return generator;
+    return generator;
 	}
 
-	return genericNames(generator, {
-		context: process.cwd()
-	});
+  return genericNames(generator, {
+    context: process.cwd()
+  });
 }
 
 module.exports = function (conf) {
-	var scope = Core.scope({
-		generateScopedName: getScopedNameGenerator(conf),
-	});
+  var scope = Core.scope({
+    generateScopedName: getScopedNameGenerator(conf),
+  });
 	
-	return new Core([
-		Core.values,
-		Core.localByDefault,
-		Core.extractImports,
-		scope,
-	]);
+  return new Core([
+    Core.values,
+    Core.localByDefault,
+    Core.extractImports,
+    scope,
+  ]);
 };
 
