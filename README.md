@@ -13,7 +13,7 @@ npm install fis3-preprocessor-css-module
 
 ### 配置
 
-1. 如果项目中有使用 `Less`、`Scss`，你还需要借助 [fis-parser-less-2.x](https://github.com/fouber/fis-parser-less-2.x)、[fis-parser-node-sass](https://github.com/fex-team/fis-parser-node-sass) 插件，将它们转换为 css 文件
+1. 如果项目中有使用 `Less`、`Sass`，你还需要借助 [fis-parser-less-2.x](https://github.com/fouber/fis-parser-less-2.x)、[fis-parser-node-sass](https://github.com/fex-team/fis-parser-node-sass) 插件，将它们转换为 css 文件
 2. 你或许还需要借助 [fis3-postprocessor-postcss](https://github.com/jiangyuan/fis3-postprocessor-postcss) 插件，完成 css 属性补全等操作
 3. 此插件也具有 js-require-css 功能，所以你可能不需要在配置 [fis3-preprocessor-js-require-css](https://github.com/fex-team/fis3-preprocessor-js-require-css)
 
@@ -28,7 +28,7 @@ fis.match('**.less', {
 // 将项目里的 sass 文件转换为 css 文件
 fis.match('**.{sass,scss}', {
     rExt: '.css',
-    parser: fis.plugin('less-2.x'),
+    parser: fis.plugin('node-sass'),
 });
 
 // 进行 css 属性补全
