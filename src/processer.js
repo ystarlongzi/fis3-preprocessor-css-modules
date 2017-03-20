@@ -58,7 +58,7 @@ module.exports = function (content, file, conf) {
     switch (mode) {
       case 'dep':
         // 添加依赖标记
-        str += lang.info.wrap(lang.require.wrap(value));
+        str += '"' + lang.info.wrap(lang.require.wrap(value)) + '"';
         break;
 
       case 'inline':
