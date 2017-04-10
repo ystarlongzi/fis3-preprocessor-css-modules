@@ -1,3 +1,5 @@
+# 已废弃，请使用[fis3-hook-css-modules](https://github.com/ystarlongzi/fis3-hook-css-modules)
+
 fis3-preprocessor-css-modules
 =============================
 
